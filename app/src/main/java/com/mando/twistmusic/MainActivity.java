@@ -146,7 +146,7 @@ public class MainActivity extends Activity {
             for(int j=0;j<tasks.length();j++){
                 JSONObject task=tasks.optJSONObject(j);if(task==null||task.optBoolean("rewarded"))continue;
                 String id=task.optString("id","");if(id.isEmpty())continue;
-                request("/loyalty/action/"+URLEncoder.encode(id,"UTF-8"),"POST",null);done++;
+                try{request("/loyalty/action/"+URLEncoder.encode(id,"UTF-8"),"POST",null);done++;}catch(Exception ignored){}
             }
         }
         return done;
@@ -163,7 +163,7 @@ public class MainActivity extends Activity {
                 try{milestone=Integer.parseInt(key);}catch(Exception ignored){continue;}
                 if(current<milestone)continue;
                 JSONObject body=new JSONObject();body.put("milestone",milestone);
-                request("/loyalty/action/"+URLEncoder.encode(id,"UTF-8"),"POST",body);done++;
+                try{request("/loyalty/action/"+URLEncoder.encode(id,"UTF-8"),"POST",body);done++;}catch(Exception ignored){}
             }
         }
         return done;
