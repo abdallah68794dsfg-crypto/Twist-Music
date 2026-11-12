@@ -94,21 +94,38 @@ public class MainActivity extends Activity {
     private void hideKeyboard(){try{((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(root.getWindowToken(),0);}catch(Exception ignored){}}
     private void showLogin(){
         base("تسجيل الدخول إلى حسابك");
-        LinearLayout intro=panel();intro.setBackground(gradient(0xffa51fc2,0xff4a176e,dp(22)));
-        intro.addView(text("مرحباً بك في Twist Music",22,Color.WHITE,true));
-        intro.addView(text("سجّل دخولك لإدارة رصيدك ومهامك بسهولة",13,0xffd9c8ed,false));
-        content.addView(intro,margin(-1,-2,16));
-        LinearLayout form=panel();
-        TextView heading=text("تسجيل الدخول",19,Color.WHITE,true);heading.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(heading);
-        TextView note=text("أدخل رقم الهاتف المرتبط بحسابك",13,0xffcbb8e7,true);note.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(note);
-        phoneInput=field("رقم الهاتف  01XXXXXXXXX",3);LinearLayout.LayoutParams fp=wide();fp.topMargin=dp(10);fp.bottomMargin=dp(12);form.addView(phoneInput,fp);
-        Button send=button("إرسال كود التحقق  ←",this::sendOtp);form.addView(send,wide());
-        View gap=new View(this);form.addView(gap,new LinearLayout.LayoutParams(1,dp(14)));
-        TextView codeLabel=text("رمز التحقق",14,0xffe6d8f5,true);codeLabel.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(codeLabel);
-        codeInput=field("أدخل الرمز المكوّن من 6 أرقام",2);LinearLayout.LayoutParams cp=wide();cp.topMargin=dp(7);cp.bottomMargin=dp(12);form.addView(codeInput,cp);
-        Button verify=button("تأكيد الكود والدخول",this::verifyOtp);form.addView(verify,wide());
-        content.addView(form,margin(-1,-2,14));
-        addStatus();addFooter();
+        content.setPadding(dp(2),dp(8),dp(2),dp(18));
+        LinearLayout hero=vertical();hero.setGravity(Gravity.CENTER_HORIZONTAL);
+        TextView emblem=text("♫",68,0xffffd36b,true);
+        emblem.setBackground(gradient(0xff252033,0xff11101b,dp(90)));
+        emblem.setElevation(dp(10));
+        LinearLayout.LayoutParams ep=new LinearLayout.LayoutParams(dp(142),dp(142));ep.bottomMargin=dp(12);
+        hero.addView(emblem,ep);
+        TextView title=text("TWIST MUSIC",31,0xffffd36b,true);title.setLetterSpacing(0.08f);hero.addView(title);
+        hero.addView(text("سجّل دخولك إلى حساب Twist",16,0xffc9bddb,false));
+        content.addView(hero,margin(-1,-2,28));
+        LinearLayout form=vertical();form.setPadding(dp(18),dp(18),dp(18),dp(18));
+        form.setBackground(gradient(0xff211c2c,0xff15121e,dp(28)));
+        TextView heading=text("تسجيل الدخول",21,Color.WHITE,true);heading.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(heading);
+        TextView method=text("طريقة الدخول",13,0xffc8bad9,true);method.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
+        LinearLayout.LayoutParams mp=wide();mp.topMargin=dp(8);form.addView(method,mp);
+        TextView phoneOnly=text("☎   رقم الهاتف",16,0xff211506,true);phoneOnly.setGravity(Gravity.CENTER);
+        phoneOnly.setBackground(gradient(0xffffe5a1,0xffd99b36,dp(24)));
+        LinearLayout.LayoutParams tab=wide();tab.height=dp(54);tab.topMargin=dp(8);tab.bottomMargin=dp(15);form.addView(phoneOnly,tab);
+        TextView phoneLabel=text("رقم الهاتف",14,0xffd2c5e3,true);phoneLabel.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(phoneLabel);
+        phoneInput=field("01XXXXXXXXX",3);phoneInput.setTextDirection(View.TEXT_DIRECTION_LTR);
+        phoneInput.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);phoneInput.setBackground(shape(0xff211d2b,dp(18)));
+        LinearLayout.LayoutParams fp=wide();fp.topMargin=dp(8);fp.bottomMargin=dp(15);form.addView(phoneInput,fp);
+        Button send=button("إرسال الكود   →",this::sendOtp);send.setTextColor(0xff241606);send.setTextSize(18);
+        send.setBackground(gradient(0xffffedbb,0xffffbd45,dp(25)));send.setElevation(dp(7));
+        LinearLayout.LayoutParams sp=wide();sp.height=dp(62);form.addView(send,sp);
+        TextView codeLabel=text("كود التحقق",14,0xffd2c5e3,true);codeLabel.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
+        LinearLayout.LayoutParams clp=wide();clp.topMargin=dp(14);form.addView(codeLabel,clp);
+        codeInput=field("أدخل الكود المكوّن من 6 أرقام",2);codeInput.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams cp=wide();cp.topMargin=dp(7);cp.bottomMargin=dp(12);form.addView(codeInput,cp);
+        Button verify=button("تأكيد الكود والدخول",this::verifyOtp);verify.setTextColor(0xff241606);
+        verify.setBackground(gradient(0xffffdf91,0xffd89a34,dp(22)));form.addView(verify,wide());
+        content.addView(form,margin(-1,-2,14));addStatus();addFooter();
     }
     private String formatPhone(String p){p=p.trim().replace(" ","").replace("+","");if(p.startsWith("0"))return "20"+p.substring(1);if(p.startsWith("20"))return p;return "20"+p;}
     private JSONObject request(String path,String method,JSONObject body)throws Exception{
