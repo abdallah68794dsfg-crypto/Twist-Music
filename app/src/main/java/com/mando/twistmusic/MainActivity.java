@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
         LinearLayout names=vertical();TextView title=text("TWIST MUSIC",20,Color.WHITE,true);title.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);TextView sub=text(subtitle,12,0xffd6c2f2,false);sub.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);names.addView(title);names.addView(sub);LinearLayout.LayoutParams np=new LinearLayout.LayoutParams(0,-2,1);np.rightMargin=dp(12);brand.addView(names,np);
         content.addView(brand,margin(-1,-2,15));
         LinearLayout links=horizontal();
-        Button developer=linkButton("المطور  @Mando_js","https://t.me/Mando_js");
+        Button developer=linkButton("المطور  Mando","https://t.me/Mando_js");
         Button channel=linkButton("قناة المطور","https://t.me/freeMohamedNet");
         LinearLayout.LayoutParams developerParams=new LinearLayout.LayoutParams(0,dp(46),1);
         developerParams.leftMargin=dp(4);developerParams.rightMargin=dp(4);
