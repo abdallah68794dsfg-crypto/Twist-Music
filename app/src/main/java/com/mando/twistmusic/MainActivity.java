@@ -71,8 +71,8 @@ public class MainActivity extends Activity {
         content=vertical();content.setGravity(Gravity.CENTER_HORIZONTAL);content.setPadding(0,0,0,dp(14));content.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);scroll.addView(content);
         root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));setContentView(root);
         LinearLayout brand=horizontal();brand.setPadding(dp(15),dp(12),dp(15),dp(12));brand.setBackground(gradient(0xff35165b,0xff171025,dp(22)));
-        TextView logo=text("◉",30,0xffffd45c,true);logo.setBackground(shape(0xff4c2675,dp(16)));brand.addView(logo,new LinearLayout.LayoutParams(dp(55),dp(55)));
-        LinearLayout names=vertical();TextView title=text("FREE NET",20,Color.WHITE,true);title.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);TextView sub=text(subtitle,12,0xffd6c2f2,false);sub.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);names.addView(title);names.addView(sub);LinearLayout.LayoutParams np=new LinearLayout.LayoutParams(0,-2,1);np.rightMargin=dp(12);brand.addView(names,np);
+        TextView logo=text("♫",30,0xffffd45c,true);logo.setBackground(shape(0xff4c2675,dp(16)));brand.addView(logo,new LinearLayout.LayoutParams(dp(55),dp(55)));
+        LinearLayout names=vertical();TextView title=text("TWIST MUSIC",20,Color.WHITE,true);title.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);TextView sub=text(subtitle,12,0xffd6c2f2,false);sub.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);names.addView(title);names.addView(sub);LinearLayout.LayoutParams np=new LinearLayout.LayoutParams(0,-2,1);np.rightMargin=dp(12);brand.addView(names,np);
         content.addView(brand,margin(-1,-2,15));
         LinearLayout links=horizontal();
         Button developer=linkButton("المطور  @Mando_js","https://t.me/Mando_js");
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
     private void showLogin(){
         base("تسجيل الدخول إلى حسابك");
         LinearLayout intro=panel();intro.setBackground(gradient(0xffa51fc2,0xff4a176e,dp(22)));
-        intro.addView(text("مرحباً بك في Free Net",22,Color.WHITE,true));
+        intro.addView(text("مرحباً بك في Twist Music",22,Color.WHITE,true));
         intro.addView(text("سجّل دخولك لإدارة رصيدك ومهامك بسهولة",13,0xffd9c8ed,false));
         content.addView(intro,margin(-1,-2,16));
         LinearLayout form=panel();
