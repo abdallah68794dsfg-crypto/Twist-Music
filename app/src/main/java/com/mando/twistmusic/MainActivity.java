@@ -71,10 +71,10 @@ public class MainActivity extends Activity {
     private void addFooter(){TextView f=text("قناة المطور  •  t.me/freeMohamedNet",11,0xff8e829f,false);content.addView(f,margin(-1,-2,2));}
     private void hideKeyboard(){try{((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(root.getWindowToken(),0);}catch(Exception ignored){}}
     private void showLogin(){
-        base("إدارة حسابك ومكافآتك بسهولة");
+        base("تسجيل الدخول إلى حسابك");
         LinearLayout intro=panel();intro.setBackground(gradient(0xff38205a,0xff241833,dp(22)));
-        intro.addView(text("أهلاً بك في Twist Music",22,Color.WHITE,true));
-        intro.addView(text("سجّل دخولك لمتابعة رصيدك والمهام والباقات من مكان واحد",13,0xffd9c8ed,false));
+        intro.addView(text("مرحباً بك في Twist Music",22,Color.WHITE,true));
+        intro.addView(text("سجّل دخولك لإدارة رصيدك ومهامك بسهولة",13,0xffd9c8ed,false));
         content.addView(intro,margin(-1,-2,16));
         LinearLayout form=panel();
         TextView heading=text("تسجيل الدخول",19,Color.WHITE,true);heading.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(heading);
