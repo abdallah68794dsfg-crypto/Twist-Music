@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
     private int dp(float v){return (int)(v*getResources().getDisplayMetrics().density+0.5f);}
     private TextView text(String s,int size,int color,boolean bold){TextView t=new TextView(this);t.setText(s);t.setTextSize(size);t.setTextColor(color);if(bold)t.setTypeface(Typeface.DEFAULT,Typeface.BOLD);t.setGravity(Gravity.CENTER);t.setPadding(dp(8),dp(7),dp(8),dp(7));t.setIncludeFontPadding(true);return t;}
     private EditText field(String hint,int type){EditText e=new EditText(this);e.setSingleLine(true);e.setHint(hint);e.setTextColor(Color.WHITE);e.setHintTextColor(0xff9992aa);e.setInputType(type);e.setTextSize(15);e.setPadding(dp(17),dp(13),dp(17),dp(13));e.setBackground(shape(0xff211a30,dp(16)));e.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return e;}
-    private Button button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(Color.WHITE);b.setTextSize(14);b.setTypeface(Typeface.DEFAULT,Typeface.BOLD);b.setAllCaps(false);b.setPadding(dp(14),dp(9),dp(14),dp(9));b.setBackground(gradient(0xff9b45ff,0xff6425c7,dp(17)));b.setElevation(dp(3));b.setOnClickListener(v->action.run());return b;}
+    private Button button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(Color.WHITE);b.setTextSize(14);b.setTypeface(Typeface.DEFAULT,Typeface.BOLD);b.setAllCaps(false);b.setPadding(dp(14),dp(9),dp(14),dp(9));b.setBackground(gradient(0xffff168d,0xff9824d8,dp(19)));b.setElevation(dp(3));b.setOnClickListener(v->action.run());return b;}
     private LinearLayout.LayoutParams wide(){return new LinearLayout.LayoutParams(-1,-2);}
     private LinearLayout vertical(){LinearLayout l=new LinearLayout(this);l.setOrientation(1);return l;}
     private LinearLayout horizontal(){LinearLayout l=new LinearLayout(this);l.setOrientation(0);l.setGravity(Gravity.CENTER_VERTICAL);return l;}
@@ -72,18 +72,18 @@ public class MainActivity extends Activity {
     private void hideKeyboard(){try{((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(root.getWindowToken(),0);}catch(Exception ignored){}}
     private void showLogin(){
         base("تسجيل الدخول إلى حسابك");
-        LinearLayout intro=panel();intro.setBackground(gradient(0xff38205a,0xff241833,dp(22)));
+        LinearLayout intro=panel();intro.setBackground(gradient(0xffa51fc2,0xff4a176e,dp(22)));
         intro.addView(text("مرحباً بك في Twist Music",22,Color.WHITE,true));
         intro.addView(text("سجّل دخولك لإدارة رصيدك ومهامك بسهولة",13,0xffd9c8ed,false));
         content.addView(intro,margin(-1,-2,16));
         LinearLayout form=panel();
         TextView heading=text("تسجيل الدخول",19,Color.WHITE,true);heading.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(heading);
-        TextView note=text("أدخل رقم الهاتف المرتبط بحسابك",12,0xffaaa0bd,false);note.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(note);
+        TextView note=text("أدخل رقم الهاتف المرتبط بحسابك",13,0xffcbb8e7,true);note.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(note);
         phoneInput=field("رقم الهاتف  01XXXXXXXXX",3);LinearLayout.LayoutParams fp=wide();fp.topMargin=dp(10);fp.bottomMargin=dp(12);form.addView(phoneInput,fp);
         Button send=button("إرسال كود التحقق  ←",this::sendOtp);form.addView(send,wide());
         View gap=new View(this);form.addView(gap,new LinearLayout.LayoutParams(1,dp(14)));
-        TextView codeLabel=text("كود التحقق",13,0xffcbb8e7,true);codeLabel.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(codeLabel);
-        codeInput=field("أدخل الكود المكوّن من 6 أرقام",2);LinearLayout.LayoutParams cp=wide();cp.topMargin=dp(7);cp.bottomMargin=dp(12);form.addView(codeInput,cp);
+        TextView codeLabel=text("رمز التحقق",14,0xffe6d8f5,true);codeLabel.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(codeLabel);
+        codeInput=field("أدخل الرمز المكوّن من 6 أرقام",2);LinearLayout.LayoutParams cp=wide();cp.topMargin=dp(7);cp.bottomMargin=dp(12);form.addView(codeInput,cp);
         Button verify=button("تأكيد الكود والدخول",this::verifyOtp);form.addView(verify,wide());
         content.addView(form,margin(-1,-2,14));
         addStatus();addFooter();
