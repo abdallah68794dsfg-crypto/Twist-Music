@@ -1,4 +1,4 @@
-name: Build Free Net APK
+name: Build Twist Music APK
 on:
   workflow_dispatch:
   push:
@@ -24,5 +24,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Free-Net-debug-apk
+          name: Twist-Music-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
