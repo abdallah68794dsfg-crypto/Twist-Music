@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.content.SharedPreferences;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
@@ -46,6 +48,17 @@ public class MainActivity extends Activity {
     private TextView text(String s,int size,int color,boolean bold){TextView t=new TextView(this);t.setText(s);t.setTextSize(size);t.setTextColor(color);if(bold)t.setTypeface(Typeface.DEFAULT,Typeface.BOLD);t.setGravity(Gravity.CENTER);t.setPadding(dp(8),dp(7),dp(8),dp(7));t.setIncludeFontPadding(true);return t;}
     private EditText field(String hint,int type){EditText e=new EditText(this);e.setSingleLine(true);e.setHint(hint);e.setTextColor(Color.WHITE);e.setHintTextColor(0xff9992aa);e.setInputType(type);e.setTextSize(15);e.setPadding(dp(17),dp(13),dp(17),dp(13));e.setBackground(shape(0xff211a30,dp(16)));e.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return e;}
     private Button button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(Color.WHITE);b.setTextSize(14);b.setTypeface(Typeface.DEFAULT,Typeface.BOLD);b.setAllCaps(false);b.setPadding(dp(14),dp(9),dp(14),dp(9));b.setBackground(gradient(0xffff168d,0xff9824d8,dp(19)));b.setElevation(dp(3));b.setOnClickListener(v->action.run());return b;}
+    private Button linkButton(String label,String url){
+        Button b=new Button(this);b.setText(label);b.setTextColor(0xfff6eaff);
+        b.setTextSize(11);b.setTypeface(Typeface.DEFAULT,Typeface.BOLD);b.setAllCaps(false);
+        b.setPadding(dp(5),dp(4),dp(5),dp(4));
+        b.setBackground(shape(0xff2a1b3b,dp(15)));
+        b.setOnClickListener(v->{
+            try{startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)));}
+            catch(Exception e){setStatus("تعذر فتح الرابط. تأكد من وجود تطبيق مناسب.");}
+        });
+        return b;
+    }
     private LinearLayout.LayoutParams wide(){return new LinearLayout.LayoutParams(-1,-2);}
     private LinearLayout vertical(){LinearLayout l=new LinearLayout(this);l.setOrientation(1);return l;}
     private LinearLayout horizontal(){LinearLayout l=new LinearLayout(this);l.setOrientation(0);l.setGravity(Gravity.CENTER_VERTICAL);return l;}
@@ -61,7 +74,16 @@ public class MainActivity extends Activity {
         TextView logo=text("♫",30,0xffffd45c,true);logo.setBackground(shape(0xff4c2675,dp(16)));brand.addView(logo,new LinearLayout.LayoutParams(dp(55),dp(55)));
         LinearLayout names=vertical();TextView title=text("TWIST MUSIC",20,Color.WHITE,true);title.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);TextView sub=text(subtitle,12,0xffd6c2f2,false);sub.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);names.addView(title);names.addView(sub);LinearLayout.LayoutParams np=new LinearLayout.LayoutParams(0,-2,1);np.rightMargin=dp(12);brand.addView(names,np);
         content.addView(brand,margin(-1,-2,15));
-        TextView dev=text("●  المطور @Mando_js",11,0xffc9a7f5,true);dev.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);content.addView(dev,margin(-1,-2,10));
+        LinearLayout links=horizontal();
+        Button developer=linkButton("المطور  @Mando_js","https://t.me/Mando_js");
+        Button channel=linkButton("قناة المطور","https://t.me/freeMohamedNet");
+        LinearLayout.LayoutParams developerParams=new LinearLayout.LayoutParams(0,dp(46),1);
+        developerParams.leftMargin=dp(4);developerParams.rightMargin=dp(4);
+        links.addView(developer,developerParams);
+        LinearLayout.LayoutParams channelParams=new LinearLayout.LayoutParams(0,dp(46),1);
+        channelParams.leftMargin=dp(4);channelParams.rightMargin=dp(4);
+        links.addView(channel,channelParams);
+        content.addView(links,margin(-1,-2,12));
     }
     private void space(){content.addView(new View(this),new LinearLayout.LayoutParams(1,dp(10)));}
     private void addStatus(){LinearLayout box=panel();box.setBackground(shape(0xff292039,dp(15)));status=text("جاهز",12,0xffffd98a,false);status.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);box.addView(status);content.addView(box,margin(-1,-2,12));}
