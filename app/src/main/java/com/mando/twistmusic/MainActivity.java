@@ -41,30 +41,52 @@ public class MainActivity extends Activity {
         if(!token.isEmpty()) showDashboard(); else showLogin();
     }
     private GradientDrawable shape(int c,int r){GradientDrawable d=new GradientDrawable();d.setColor(c);d.setCornerRadius(r);return d;}
-    private TextView text(String s,int size,int color,boolean bold){TextView t=new TextView(this);t.setText(s);t.setTextSize(size);t.setTextColor(color);if(bold)t.setTypeface(Typeface.DEFAULT,Typeface.BOLD);t.setGravity(Gravity.CENTER);t.setPadding(12,10,12,10);return t;}
-    private EditText field(String hint,int type){EditText e=new EditText(this);e.setSingleLine(true);e.setHint(hint);e.setTextColor(Color.WHITE);e.setHintTextColor(0xffaaa5b8);e.setInputType(type);e.setPadding(16,12,16,12);e.setBackground(shape(PANEL,18));return e;}
-    private Button button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(Color.WHITE);b.setAllCaps(false);b.setBackground(shape(PURPLE,18));b.setOnClickListener(v->action.run());return b;}
+    private GradientDrawable gradient(int a,int b,int r){GradientDrawable d=new GradientDrawable(GradientDrawable.Orientation.TL_BR,new int[]{a,b});d.setCornerRadius(r);return d;}
+    private int dp(float v){return (int)(v*getResources().getDisplayMetrics().density+0.5f);}
+    private TextView text(String s,int size,int color,boolean bold){TextView t=new TextView(this);t.setText(s);t.setTextSize(size);t.setTextColor(color);if(bold)t.setTypeface(Typeface.DEFAULT,Typeface.BOLD);t.setGravity(Gravity.CENTER);t.setPadding(dp(8),dp(7),dp(8),dp(7));t.setIncludeFontPadding(true);return t;}
+    private EditText field(String hint,int type){EditText e=new EditText(this);e.setSingleLine(true);e.setHint(hint);e.setTextColor(Color.WHITE);e.setHintTextColor(0xff9992aa);e.setInputType(type);e.setTextSize(15);e.setPadding(dp(17),dp(13),dp(17),dp(13));e.setBackground(shape(0xff211a30,dp(16)));e.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);return e;}
+    private Button button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(Color.WHITE);b.setTextSize(14);b.setTypeface(Typeface.DEFAULT,Typeface.BOLD);b.setAllCaps(false);b.setPadding(dp(14),dp(9),dp(14),dp(9));b.setBackground(gradient(0xff9b45ff,0xff6425c7,dp(17)));b.setElevation(dp(3));b.setOnClickListener(v->action.run());return b;}
     private LinearLayout.LayoutParams wide(){return new LinearLayout.LayoutParams(-1,-2);}
+    private LinearLayout vertical(){LinearLayout l=new LinearLayout(this);l.setOrientation(1);return l;}
+    private LinearLayout horizontal(){LinearLayout l=new LinearLayout(this);l.setOrientation(0);l.setGravity(Gravity.CENTER_VERTICAL);return l;}
+    private LinearLayout.LayoutParams margin(int w,int h,int bottom){LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(w,h);p.bottomMargin=dp(bottom);return p;}
+    private TextView label(String s){TextView t=text(s,13,0xffbcb2d0,true);t.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);t.setPadding(0,dp(7),dp(3),dp(7));return t;}
+    private LinearLayout panel(){LinearLayout p=vertical();p.setPadding(dp(16),dp(15),dp(16),dp(15));p.setBackground(shape(0xff1c1728,dp(22)));p.setElevation(dp(2));return p;}
     private void base(String subtitle){
-        root=new LinearLayout(this);root.setOrientation(1);root.setPadding(20,18,20,18);root.setBackgroundColor(BG);
-        ScrollView scroll=new ScrollView(this);content=new LinearLayout(this);content.setOrientation(1);content.setGravity(Gravity.CENTER_HORIZONTAL);scroll.addView(content);
+        root=vertical();root.setPadding(dp(18),dp(14),dp(18),dp(18));root.setBackgroundColor(BG);
+        ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);scroll.setClipToPadding(false);
+        content=vertical();content.setGravity(Gravity.CENTER_HORIZONTAL);content.setPadding(0,0,0,dp(14));content.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);scroll.addView(content);
         root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));setContentView(root);
-        content.addView(text("♬  TWIST MUSIC",29,Color.WHITE,true));
-        content.addView(text(subtitle,14,0xffd5b9ff,false));
-        content.addView(text("DEVELOPER  @Mando_js",12,0xffc5aaff,true));
+        LinearLayout brand=horizontal();brand.setPadding(dp(15),dp(12),dp(15),dp(12));brand.setBackground(gradient(0xff35165b,0xff171025,dp(22)));
+        TextView logo=text("♫",30,0xffffd45c,true);logo.setBackground(shape(0xff4c2675,dp(16)));brand.addView(logo,new LinearLayout.LayoutParams(dp(55),dp(55)));
+        LinearLayout names=vertical();TextView title=text("TWIST MUSIC",20,Color.WHITE,true);title.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);TextView sub=text(subtitle,12,0xffd6c2f2,false);sub.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);names.addView(title);names.addView(sub);LinearLayout.LayoutParams np=new LinearLayout.LayoutParams(0,-2,1);np.rightMargin=dp(12);brand.addView(names,np);
+        content.addView(brand,margin(-1,-2,15));
+        TextView dev=text("●  المطور @Mando_js",11,0xffc9a7f5,true);dev.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);content.addView(dev,margin(-1,-2,10));
     }
-    private void space(){content.addView(new View(this),new LinearLayout.LayoutParams(1,12));}
-    private void addStatus(){status=text("",13,0xffffd27a,false);content.addView(status);}
+    private void space(){content.addView(new View(this),new LinearLayout.LayoutParams(1,dp(10)));}
+    private void addStatus(){LinearLayout box=panel();box.setBackground(shape(0xff292039,dp(15)));status=text("جاهز",12,0xffffd98a,false);status.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);box.addView(status);content.addView(box,margin(-1,-2,12));}
     private void setStatus(String s){runOnUiThread(()->{if(status!=null)status.setText(s);});}
+    private void addFieldCaption(String caption){content.addView(label(caption),margin(-1,-2,4));}
+    private void addPrimary(String caption,Runnable action){Button b=button(caption,action);content.addView(b,margin(-1,dp(54),10));}
+    private void addFooter(){TextView f=text("قناة المطور  •  t.me/freeMohamedNet",11,0xff8e829f,false);content.addView(f,margin(-1,-2,2));}
     private void hideKeyboard(){try{((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(root.getWindowToken(),0);}catch(Exception ignored){}}
     private void showLogin(){
-        base("إدارة حسابك ونقاطك في Twist");
-        space();content.addView(text("تسجيل الدخول",21,Color.WHITE,true));
-        phoneInput=field("رقم الهاتف مثال 01XXXXXXXXX",3);content.addView(phoneInput,wide());
-        space();content.addView(button("إرسال كود التحقق",this::sendOtp),wide());
-        codeInput=field("كود التحقق المكوّن من 6 أرقام",2);content.addView(codeInput,wide());
-        space();content.addView(button("تأكيد الكود وتسجيل الدخول",this::verifyOtp),wide());
-        space();addStatus();content.addView(text("قناة المطور: t.me/freeMohamedNet",12,0xffbcb5d1,false));
+        base("إدارة حسابك ومكافآتك بسهولة");
+        LinearLayout intro=panel();intro.setBackground(gradient(0xff38205a,0xff241833,dp(22)));
+        intro.addView(text("أهلاً بك في Twist Music",22,Color.WHITE,true));
+        intro.addView(text("سجّل دخولك لمتابعة رصيدك والمهام والباقات من مكان واحد",13,0xffd9c8ed,false));
+        content.addView(intro,margin(-1,-2,16));
+        LinearLayout form=panel();
+        TextView heading=text("تسجيل الدخول",19,Color.WHITE,true);heading.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(heading);
+        TextView note=text("أدخل رقم الهاتف المرتبط بحسابك",12,0xffaaa0bd,false);note.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(note);
+        phoneInput=field("رقم الهاتف  01XXXXXXXXX",3);LinearLayout.LayoutParams fp=wide();fp.topMargin=dp(10);fp.bottomMargin=dp(12);form.addView(phoneInput,fp);
+        Button send=button("إرسال كود التحقق  ←",this::sendOtp);form.addView(send,wide());
+        View gap=new View(this);form.addView(gap,new LinearLayout.LayoutParams(1,dp(14)));
+        TextView codeLabel=text("كود التحقق",13,0xffcbb8e7,true);codeLabel.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);form.addView(codeLabel);
+        codeInput=field("أدخل الكود المكوّن من 6 أرقام",2);LinearLayout.LayoutParams cp=wide();cp.topMargin=dp(7);cp.bottomMargin=dp(12);form.addView(codeInput,cp);
+        Button verify=button("تأكيد الكود والدخول",this::verifyOtp);form.addView(verify,wide());
+        content.addView(form,margin(-1,-2,14));
+        addStatus();addFooter();
     }
     private String formatPhone(String p){p=p.trim().replace(" ","").replace("+","");if(p.startsWith("0"))return "20"+p.substring(1);if(p.startsWith("20"))return p;return "20"+p;}
     private JSONObject request(String path,String method,JSONObject body)throws Exception{
@@ -126,18 +148,32 @@ public class MainActivity extends Activity {
         if(usageView!=null)usageView.setText("📊 استهلاك الشهر: "+monthlyUsed+" / "+MONTHLY_LIMIT+" وحدة");
     }
     private void showDashboard(){
-        base("لوحة التحكم");
-        space();content.addView(text("مرحباً بعودتك",19,Color.WHITE,true));
-        content.addView(text("الحساب: "+phone,14,0xffd5cce8,false));
-        balanceView=text("💎 الرصيد: "+balance+" كوينز",23,0xffffd27a,true);content.addView(balanceView);
-        usageView=text("📊 استهلاك الشهر: "+monthlyUsed+" / "+MONTHLY_LIMIT+" وحدة",13,0xffc5aaff,false);content.addView(usageView);
-        space();addStatus();
-        content.addView(button("🎯 تجميع النقاط والمهام",this::collectTasks),wide());space();
-        content.addView(button("📦 سحب الوحدات",this::packagesScreen),wide());space();
-        content.addView(button("⚡ تجميع + سحب",this::collectThenRedeem),wide());space();
-        content.addView(button("🔄 تحديث الرصيد",()->runTask("جارٍ تحديث الرصيد...",()->{refreshBalance();saveSession();runOnUiThread(this::updateStats);return "تم تحديث الرصيد";})),wide());space();
-        content.addView(button("🚪 تسجيل الخروج",this::logout),wide());space();
-        content.addView(text("قناة المطور: t.me/freeMohamedNet",12,0xffbcb5d1,false));
+        base("لوحة تحكم حسابك");
+        LinearLayout welcome=panel();welcome.setBackground(gradient(0xff47216f,0xff21152f,dp(23)));
+        TextView hi=text("مرحباً بعودتك 👋",19,Color.WHITE,true);hi.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);welcome.addView(hi);
+        TextView account=text("الحساب  "+phone,12,0xffd6c2f2,false);account.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);welcome.addView(account);
+        content.addView(welcome,margin(-1,-2,13));
+        LinearLayout balanceCard=panel();balanceCard.setBackground(gradient(0xff6c35b2,0xff39205d,dp(23)));
+        TextView cap=text("إجمالي رصيدك",13,0xffe3d0ff,true);cap.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);balanceCard.addView(cap);
+        balanceView=text("💎  "+balance+" كوينز",30,0xffffdf79,true);balanceView.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);balanceCard.addView(balanceView);
+        TextView hint=text("رصيد المكافآت المتاح في حسابك",11,0xffdfc9ff,false);hint.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);balanceCard.addView(hint);
+        content.addView(balanceCard,margin(-1,-2,12));
+        LinearLayout usage=panel();
+        TextView usageTitle=text("استهلاك الشهر",13,0xffcdbce8,true);usageTitle.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);usage.addView(usageTitle);
+        usageView=text(monthlyUsed+" / "+MONTHLY_LIMIT+" وحدة",17,Color.WHITE,true);usageView.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);usage.addView(usageView);
+        View track=new View(this);GradientDrawable trackBg=shape(0xff3a3049,dp(8));track.setBackground(trackBg);LinearLayout.LayoutParams tp=wide();tp.height=dp(7);tp.topMargin=dp(8);usage.addView(track,tp);
+        int percent=Math.min(100,(int)(monthlyUsed*100f/MONTHLY_LIMIT));
+        View fill=new View(this);fill.setBackground(gradient(0xffd66bff,0xff8c43ff,dp(8)));FrameLayout bar=new FrameLayout(this);bar.addView(track,new FrameLayout.LayoutParams(-1,dp(7)));FrameLayout.LayoutParams bp=new FrameLayout.LayoutParams(-1,dp(7),Gravity.RIGHT);bp.width=dp(260)*percent/100;bar.addView(fill,bp);usage.addView(bar,margin(-1,dp(7),0));
+        content.addView(usage,margin(-1,-2,16));
+        TextView actions=text("الخدمات المتاحة",17,Color.WHITE,true);actions.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);content.addView(actions,margin(-1,-2,8));
+        addStatus();
+        addPrimary("🎯   تجميع النقاط والمهام",this::collectTasks);
+        addPrimary("📦   سحب الوحدات",this::packagesScreen);
+        addPrimary("⚡   تجميع المهام + السحب",this::collectThenRedeem);
+        Button refresh=button("↻   تحديث الرصيد",()->runTask("جارٍ تحديث الرصيد...",()->{refreshBalance();saveSession();runOnUiThread(this::updateStats);return "تم تحديث الرصيد";}));
+        refresh.setBackground(shape(0xff302441,dp(17)));content.addView(refresh,margin(-1,dp(52),10));
+        Button logout=button("تسجيل الخروج",this::logout);logout.setBackground(shape(0xff3a202d,dp(17)));content.addView(logout,margin(-1,dp(50),12));
+        addFooter();
     }
     private int collectBadges(JSONObject data)throws Exception{
         int done=0;JSONArray categories=data.optJSONArray("badges");
